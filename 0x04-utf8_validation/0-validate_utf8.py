@@ -9,6 +9,11 @@ def validUTF8(data):
     i = 0
     while i < len(data):
         byte = data[i]
+
+        # Ensure the byte is in the valid range (0-255)
+        if byte < 0 or byte > 255:
+            return False
+
         if byte >> 3 == 0b11110:  # 4-byte character
             length = 4
         elif byte >> 4 == 0b1110:  # 3-byte character
@@ -20,7 +25,9 @@ def validUTF8(data):
         else:
             return False  # Invalid leading byte
 
-        if i + length > len(data) or any(not is_continuation(data[i + j]) for j in range(1, length)):
+        # Check if the continuation bytes are valid
+        if i + length > len(data) or any(
+                not is_continuation(data[i + j]) for j in range(1, length)):
             return False
         i += length
 
