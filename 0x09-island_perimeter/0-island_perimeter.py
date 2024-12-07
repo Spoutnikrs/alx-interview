@@ -3,9 +3,10 @@
 docs
 """
 
+
 def island_perimeter(grid):
     """
-   docs
+    docs
     """
     perimeter = 0
     rows, cols = len(grid), len(grid[0])
